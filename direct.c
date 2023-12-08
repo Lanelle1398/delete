@@ -65,13 +65,13 @@ int main(int argc, char* argv[]) {
             return 1;
         }
         
-        off_t size_of_block = 907374182456799; //90000000000000000
+        off_t size_of_block = 1*1024*1024*934; //90000000000000000
         off_t  block_count = size_of_block;
         char* buffer = (char*)malloc(block_count + 1); // +1 for null terminator
-       // while (1) {
+       while (1) {
             // Read a portion of file and measure the time taken
             start = clock();
-            result = read(fd, buffer, size_of_block);
+            result = read(fd, buffer, block_size);
             end = clock();
 
             total_time = (double)(end - start) / CLOCKS_PER_SEC;
@@ -81,36 +81,12 @@ int main(int argc, char* argv[]) {
                 printf("File size for reasonable reading time: %lld\n", (long long)size_of_block);
                 //break;
             }
-
-            // Double the size of the portion to be read and try again
-            //size_of_block *= 2;
-        //}
-        /*
-
-        start = clock();
-        //start = now();
-        for (int i = 0; i < block_count; ++i) {
-            result = read(fd, buffer, block_size);
-            if (result == -1) {
-                perror("Error reading from file");
-                close(fd);
-                free(buffer);
-                return 1;
-            }
-            if (result == 0) {
-                // EOF reached
+            else{
+               /// printf("no file with reasonable size found \n");
                 break;
             }
-            // Optionally process the buffer here
         }
-        //finish = now();
-        end = clock();
-        total_time = (double)(end - start) / CLOCKS_PER_SEC;
-
-        //printf("Read performance: %f MB/s\n", block_size * block_count / ((finish - start) / 1000000.0) / (1024 * 1024));
-        printf("block count is  %lld\n", (long long)block_count);
-        printf("Time taken to read the file: %f seconds\n", total_time);
         close(fd);
-        free(buffer);*/
+        free(buffer);
         return 0;
 }
