@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
         //}
         // Read mode
          //posix_fadvise(fd, 0, 0, POSIX_FADV_SEQUENTIAL);
-        fd = open(filename, O_RDONLY |O_DIRECT);
+        fd = open(filename, O_RDONLY);
         if (fd == -1) {
             perror("Error opening file");
             return 1;
